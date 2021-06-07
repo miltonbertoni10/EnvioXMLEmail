@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/02/16 13:45:29.000.828,=C:\Users\milton.bertoni\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/04 11:28:54.000.885,=C:\Users\milton.bertoni\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/04 14:13:57.000.500,C:\Users\milton.bertoni\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\milton.bertoni\Desktop\Teste\UTeste.pas</Transaction>
+    <Transaction>2021/06/04 14:13:57.000.500,C:\Users\milton.bertoni\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\milton.bertoni\Desktop\Teste\UTeste.dfm</Transaction>
+    <Transaction>2021/06/04 14:14:06.000.617,C:\Users\milton.bertoni\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\milton.bertoni\Desktop\Teste\Project1.dproj</Transaction>
+    <Transaction>2021/06/04 14:21:09.000.530,=C:\Users\milton.bertoni\Desktop\Teste\Unit1.pas</Transaction>
+    <Transaction>2021/06/04 14:21:23.000.537,C:\Users\milton.bertoni\Desktop\Teste\Unit1.pas=C:\Users\milton.bertoni\Desktop\Teste\uClassEmail.pas</Transaction>
+  </Transactions>
+</BorlandProject>

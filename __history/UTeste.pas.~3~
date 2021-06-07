@@ -1,0 +1,136 @@
+unit UTeste;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,XMLDoc,IdHTTP, Vcl.StdCtrls,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,DBXJSON,
+  FormatedGroupBox, Vcl.Mask,uClassEmail;
+
+type
+  TForm1 = class(TForm)
+    edtNumero: TEdit;
+    edtComplemento: TEdit;
+    edtBairro: TEdit;
+    edtLogradouro: TEdit;
+    edtCidade: TEdit;
+    edtEstado: TEdit;
+    edtPais: TEdit;
+    IdHTTP1: TIdHTTP;
+    edtNome: TEdit;
+    edtEmail: TEdit;
+    FormatedGroupBox1: TFormatedGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    msCpf: TMaskEdit;
+    edtIdentidade: TEdit;
+    MaskEdit1: TMaskEdit;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    msCep: TMaskEdit;
+    btnGravar: TButton;
+    procedure setValues(AJSONObject : TJSONObject);
+    procedure msCepExit(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+    { Private declarations }
+
+  procedure consultaCep(ACep : string);
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm1 }
+
+procedure TForm1.btnGravarClick(Sender: TObject);
+var
+ email : TMail;
+begin
+  email := TMail.Create;
+  try
+    email.FromAddress := 'miltonclaudio71@hotmail.com';
+    email.FromName    := 'Milton';
+    email.ReplyToAddress := 'teste';
+    email.RecipientsAddress := 'miltonclaudio71@hotmail.com';
+    email.Subject := 'enviando...';
+    email.Body := 'teste';
+
+    email.Send;
+
+  finally
+    FreeAndNil(email);
+  end;
+end;
+
+procedure TForm1.consultaCep(ACep : string);
+var
+  TSConsulta   : TStringList;
+  JSONObject   : TJSONObject;
+
+begin
+  TSConsulta := TStringList.Create;
+  try
+
+    TSConsulta.text    := idhttp1.URL.URLDecode(idhttp1.Get('http://viacep.com.br/ws/'+ ACep +'/json/'));
+
+    JSONObject := TJSONObject.ParseJSONValue(UTF8Decode(TSConsulta.Text)) as TJSONObject;
+
+    setValues(JSONObject);
+
+  finally
+    FreeAndNil(TSConsulta);
+  end;
+
+end;
+
+procedure TForm1.msCepExit(Sender: TObject);
+begin
+  if msCep.Text = '' then
+  begin
+    MessageDlg('Para realizar a consulta é necessario informar o CEP.',mtInformation,[mbOK],0);
+    msCep.SetFocus;
+    Exit;
+  end;
+
+  consultaCep(msCep.Text);
+end;
+
+procedure TForm1.setValues(AJSONObject: TJSONObject);
+var
+  lJsonValue : TJSONValue;
+begin
+  lJsonValue :=   AJSONObject.Get('logradouro').JsonValue;
+  edtLogradouro.text := lJsonValue.Value;
+
+  lJsonValue :=   AJSONObject.Get('complemento').JsonValue;
+  edtComplemento.text := lJsonValue.Value;
+
+  lJsonValue :=   AJSONObject.Get('bairro').JsonValue;
+  edtBairro.text := lJsonValue.Value;
+
+  lJsonValue :=   AJSONObject.Get('localidade').JsonValue;
+  edtCidade.text := lJsonValue.Value;
+
+  lJsonValue :=   AJSONObject.Get('uf').JsonValue;
+  edtEstado.text := lJsonValue.Value;
+
+end;
+
+end.
